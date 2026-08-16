@@ -7,7 +7,7 @@ Los Santos, San Andreas.
 
 ## À propos du projet
 
-Ce dépôt contient l'intégralité du code source des pages réalisées par Prisme Digital, entreprise de développement web opérant sur le serveur FlashbackFA. Il est public et le restera : l'accès complet au code, sans obfuscation, fait partie des engagements pris auprès de FlashbackFA.
+Ce dépôt contient l'intégralité du code source du site vitrine de Prisme Digital, entreprise de développement web opérant sur le serveur FlashbackFA. Il est public et le restera : l'accès complet au code, sans obfuscation, fait partie des engagements pris auprès de FlashbackFA.
 
 Aucune adresse de mise en ligne n'est indiquée ici. Les pages sont déployées par l'administration de FlashbackFA sur le domaine `fbfa.fr`, seul domaine autorisé.
 
@@ -18,7 +18,6 @@ Aucune adresse de mise en ligne n'est indiquée ici. Les pages sont déployées 
 ```
 Paulygone-FlashbackFA/
 ├── index.html    ← le site vitrine, complet et autonome
-├── espace.html   ← la démonstration d'espace membre
 ├── images/       ← les visuels d'origine, non nécessaires au déploiement
 └── README.md
 ```
@@ -37,19 +36,11 @@ Paulygone-FlashbackFA/
 | Communauté | Le serveur Discord, point d'entrée de tous les échanges |
 | Pied de page | Navigation, mentions légales, cadre du projet |
 
-### espace.html — la démonstration d'espace membre
-
-Prototype d'espace réservé aux employés, avec connexion via Discord et tableau de bord.
-
-Le champ `CLIENT_ID` en haut du fichier est volontairement vide. L'identifiant d'application Discord est fourni par l'administration de FlashbackFA : aucune application n'est créée par nos soins sur le portail Discord Developer. Le `Client Secret` n'est jamais utilisé côté navigateur et ne doit jamais figurer dans ce fichier.
-
-Un mode démonstration permet de consulter le tableau de bord sans connexion, à partir de données fictives.
-
 ---
 
 ## Choix techniques
 
-Les pages sont des **documents HTML autonomes**, sans framework ni étape de compilation.
+Le site est un **document HTML unique et autonome**, sans framework ni étape de compilation.
 
 | Élément | Choix | Raison |
 |---|---|---|
@@ -58,15 +49,15 @@ Les pages sont des **documents HTML autonomes**, sans framework ni étape de com
 | Interactivité | JavaScript vanilla (ES5) | Compatible avec tous les navigateurs, aucun build |
 | Typographie | Space Grotesk + Inter | Repli automatique sur les polices système |
 | Animations | Canvas 2D + IntersectionObserver | Désactivées si `prefers-reduced-motion` |
-| Images | Encodées en base64 dans `index.html` | Un seul fichier à déployer, aucun lien à casser |
+| Images | Encodées en base64 dans le document | Un seul fichier à déployer, aucun lien à casser |
 
-**Pourquoi un fichier unique ?** Les pages sont hébergées sur une infrastructure tierce, sans accès administrateur du développeur, et mises en ligne par l'administration. Un livrable sans dépendance, sans runtime et sans build garantit un déploiement par simple copie de fichier, et une maintenance possible par n'importe qui.
+**Pourquoi un fichier unique ?** Le site est hébergé sur une infrastructure tierce, sans accès administrateur du développeur, et mis en ligne par l'administration. Un livrable sans dépendance, sans runtime et sans build garantit un déploiement par simple copie de fichier, et une maintenance possible par n'importe qui.
 
 ### Appels réseau
 
-`index.html` ne charge que les polices de caractères, depuis `fonts.googleapis.com` et `fonts.gstatic.com`. En cas d'indisponibilité, les polices système prennent le relais sans dégrader la mise en page.
+Le site ne charge que les polices de caractères, depuis `fonts.googleapis.com` et `fonts.gstatic.com`. En cas d'indisponibilité, les polices système prennent le relais sans dégrader la mise en page.
 
-`espace.html` contacte en plus `discord.com` et `cdn.discordapp.com`, uniquement lors d'une connexion Discord, pour vérifier l'identité et récupérer l'avatar de l'utilisateur.
+Aucun autre appel réseau n'est effectué.
 
 ### Points d'attention
 
@@ -82,8 +73,6 @@ Les pages sont des **documents HTML autonomes**, sans framework ni étape de com
 Aucune installation, aucune compilation.
 
 **`index.html` se suffit à lui-même** : le fichier contient le code, les styles, les scripts et les images. Le déposer à la racine du serveur suffit.
-
-**`espace.html` nécessite deux choses** avant de fonctionner : un identifiant d'application Discord transmis par l'administration, à coller dans `CLIENT_ID`, et l'ajout de l'adresse de la page dans les URL de redirection autorisées de cette application.
 
 Le dossier `images/` contient les visuels d'origine à leur taille réelle. Il n'est **pas nécessaire au déploiement**, les images étant déjà intégrées dans `index.html`. Il est conservé pour permettre de modifier ou remplacer un visuel par la suite.
 
