@@ -484,8 +484,8 @@ html.motion-on .mtoggle .sw::after{transform:translateX(15px);background:var(--c
 <section id="indic">
   <div class="wrap">
     <div class="kpis rev">
-      <div class="kpi"><b data-count="1">0</b><span>Plateformes en production</span></div>
-      <div class="kpi"><b data-count="1">0</b><span>Plateformes déjà produites</span></div>
+      <div class="kpi"><b data-count="1">0</b><span data-sing="Plateforme en production" data-plur="Plateformes en production">Plateforme en production</span></div>
+      <div class="kpi"><b data-count="1">0</b><span data-sing="Plateforme déjà produite" data-plur="Plateformes déjà produites">Plateforme déjà produite</span></div>
       <div class="kpi"><b data-raw="7 j / 7">0</b><span>Jours de disponibilité par semaine</span></div>
     </div>
   </div>
@@ -851,6 +851,12 @@ html.motion-on .mtoggle .sw::after{transform:translateX(15px);background:var(--c
       var raw = el.getAttribute('data-raw');
       if(raw){ el.textContent = raw; return; }
       var target = parseInt(el.getAttribute('data-count'), 10) || 0, cur = 0, steps = 42;
+      /* le libellé s'accorde tout seul : « 1 plateforme », « 2 plateformes » */
+      var lbl = el.parentNode.querySelector('span[data-sing]');
+      if(lbl){
+        var f = (target > 1) ? lbl.getAttribute('data-plur') : lbl.getAttribute('data-sing');
+        if(f) lbl.textContent = f;
+      }
       var inc = target / steps;
       var id = setInterval(function(){
         cur += inc;
